@@ -17,21 +17,19 @@ app.use(async (ctx, next) => {
     ctx.status = 200;
     console.log("Validation Successfull");
     ctx.body = `User Name: ${bodyData.name} User Age: ${bodyData.age}`;
+  } else if (validation.fails()) {
+    ctx.status = 400;
+    console.log("Validation Failed");
+    ctx.body = { error: "Wrong Data type passed" };
   } else {
     await next();
-  }
-  if (validation.fails()) {
-    ctx.status = 500;
-    ctx.body = { error: "Internal Server Error" };
-    console.log("server error");
   }
 });
 
 app.use(async (ctx) => {
-  ctx.status = 400;
-  console.log("Validation Failed");
-  ctx.body = { errors };
-  console.log(errors);
+  ctx.status = 500;
+  ctx.body = { error: "Internal Server Error" };
+  console.log("Server Error");
 });
 
 app.listen(3001, () => {

@@ -1,6 +1,8 @@
 const Koa = require("koa");
 const app = new Koa();
+const bodyParser = require("koa-body-parser");
 
+app.use(bodyParser());
 // Middleware to measure runtime
 app.use(async (ctx, next) => {
   const start = Date.now();
@@ -9,8 +11,7 @@ app.use(async (ctx, next) => {
   const duration = end - start;
   console.log("App-Response-Time", `${duration}ms`);
 });
-
-// Your other middleware and routes
+// other middleware and routes
 app.use(async (ctx) => {
   ctx.body = "This is Koa Project";
 });
